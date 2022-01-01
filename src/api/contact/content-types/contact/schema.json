@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "contacts",
+  "info": {
+    "singularName": "contact",
+    "pluralName": "contacts",
+    "displayName": "contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "linkedin": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "github": {
+      "type": "string"
+    },
+    "codepen": {
+      "type": "string"
+    },
+    "observablehq": {
+      "type": "string"
+    },
+    "stackoverflow": {
+      "type": "string"
+    },
+    "codesandbox": {
+      "type": "string"
+    }
+  }
+}

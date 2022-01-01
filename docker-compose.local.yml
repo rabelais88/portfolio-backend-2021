@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db-strapi:
+    image: postgres:14.1
+    environment:
+      - POSTGRES_DB=sample-db
+      - POSTGRES_USER=sample-user
+      - POSTGRES_PASSWORD=sample-pass
+    volumes:
+     - ./.tmp/data:/var/lib/postgresql/data
+  strapi:
+    build:
+      dockerfile: dockerfile
+      context: .
+    environment:
+      - DATABASE_URL=postgres://sample-user:sample-pass@db-strapi:5432/sample-db
+    volumes:
+      - .:/home/node/app
+      - strapi_module:/home/node/app/node_modules
+    ports:
+      - '1337:1337'
+    depends_on:
+      - db
+
+volumes:
+  strapi_module:
