@@ -14,8 +14,10 @@ services:
       context: .
     environment:
       - DATABASE_URL=postgres://sample-user:sample-pass@db-strapi:5432/sample-db
+      - NODE_ENV=local
     volumes:
       - .:/home/node/app
+      # - strapi_build:/home/node/app/build
       - strapi_module:/home/node/app/node_modules
     ports:
       - '1337:1337'
@@ -24,3 +26,4 @@ services:
 
 volumes:
   strapi_module:
+  # strapi_build:

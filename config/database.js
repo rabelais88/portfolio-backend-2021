@@ -4,6 +4,11 @@ const { parse } = require('pg-connection-string');
 
 module.exports = ({ env }) => {
   const { host, port, database, user, password } = parse(env('DATABASE_URL'));
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+  const isLocal = process.env.NODE_ENV === 'local';
+  const ssl = isLocal
+    ? false
+    : { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
   return {
     connection: {
       client: 'postgres',
@@ -13,7 +18,7 @@ module.exports = ({ env }) => {
         database,
         user,
         password,
-        ssl: { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) },
+        ssl,
       },
       options: {
         ssl: env('DATABASE_SSL', false),
