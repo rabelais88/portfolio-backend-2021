@@ -1,2 +1,4 @@
 # heroku ignored files
 .env.local
+.tmp
+.vscode
