@@ -22,7 +22,7 @@ services:
     ports:
       - '1337:1337'
     depends_on:
-      - db
+      - db-strapi
 
 volumes:
   strapi_module:
