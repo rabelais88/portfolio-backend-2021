@@ -16,5 +16,8 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  bootstrap({ strapi }) {
+    // const algolia = require('./algolia');
+    // algolia.init(env('ALGOLIA_APP_ID'), env('ALGOLIA_API_KEY'));
+  },
 };
