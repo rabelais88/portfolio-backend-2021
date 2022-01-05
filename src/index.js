@@ -1,4 +1,5 @@
 'use strict';
+const algolia = require('./algolia');
 
 module.exports = {
   /**
@@ -16,8 +17,21 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap({ strapi }) {
-    // const algolia = require('./algolia');
-    // algolia.init(env('ALGOLIA_APP_ID'), env('ALGOLIA_API_KEY'));
+  async bootstrap({ strapi }) {
+    algolia.init({
+      appId: process.env.ALGOLIA_APP_ID,
+      apiKey: process.env.ALGOLIA_API_KEY,
+    });
+    const posts = Array.from(
+      await strapi.db.query('api::post.post').findMany({
+        populate: {
+          tags: true,
+        },
+      })
+    ).map((p) => ({ ...p, objectID: p.id }));
+    console.log(`updating ${posts.length} post(s)...`);
+    // the Promise is left unwaited intentionally
+    await algolia.deleteObjects('posts');
+    algolia.saveObjects('posts', posts);
   },
 };
