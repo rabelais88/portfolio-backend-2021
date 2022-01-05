@@ -18,6 +18,7 @@ services:
     volumes:
       - .:/home/node/app
       # - strapi_build:/home/node/app/build
+      # CLEAR VOLUME IF A NEW PACKAGE GOT INSTALLED
       - strapi_module:/home/node/app/node_modules
     ports:
       - '1337:1337'
