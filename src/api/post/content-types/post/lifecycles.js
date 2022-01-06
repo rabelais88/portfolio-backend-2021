@@ -11,10 +11,10 @@ module.exports = {
       ].join('-');
   },
   async afterCreate(event) {
-    const { data } = event.params;
+    const { result } = event;
     console.log('object created', event);
-    if (!data.objectID) event.params.data.objectID = event.result.id;
-    await algolia.saveObject('posts', data);
+    if (!result.objectID) result.objectID = result.id;
+    await algolia.saveObject('posts', result);
   },
   beforeUpdate(event) {
     const { data } = event.params;
@@ -25,9 +25,9 @@ module.exports = {
       ].join('-');
   },
   async afterUpdate(event) {
-    const { data } = event.params;
-    if (!data.objectID) data.objectID = event.result.id;
-    await algolia.updateObject('posts', data);
+    const { result } = event;
+    if (!result.objectID) result.objectID = result.id;
+    await algolia.updateObject('posts', result);
   },
   async beforeDelete(event) {
     await algolia.deleteObjectById('posts', event.params.where.id);

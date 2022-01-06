@@ -18,18 +18,28 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
-    if (process.env.INDEXING_ON_BOOT === 'true') {
+    try {
       algolia.init({
         appId: process.env.ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_API_KEY,
       });
+    } catch (err) {
+      console.error(err);
+    }
+    if (process.env.INDEXING_ON_BOOT === 'true') {
       const posts = Array.from(
         await strapi.db.query('api::post.post').findMany({
+          where: {
+            publishedAt: {
+              $notNull: true,
+            },
+          },
           populate: {
             tags: true,
           },
         })
       ).map((p) => ({ ...p, objectID: p.id }));
+      console.log(posts);
       console.log(`updating ${posts.length} post(s)...`);
       // the Promise is left unwaited intentionally
       await algolia.deleteObjects('posts');
