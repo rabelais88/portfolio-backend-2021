@@ -13,6 +13,7 @@ module.exports = ({ env }) => [
             'cdn.jsdelivr.net',
             'strapi.io',
             `${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`,
+            'sungryeol-portfolio.herokuapp.com',
           ],
         },
       },
