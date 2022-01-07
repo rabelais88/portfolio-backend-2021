@@ -11,6 +11,19 @@ class Algolia {
   }
   /**
    * @description
+   * setting facets(filters)
+   * @param {string} index
+   * @param {string[]} facets
+   * @return {Promise}
+   */
+  settings(index, facets = []) {
+    // https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#examples
+    return this.client.initIndex(index).setSettings({
+      attributesForFaceting: facets,
+    });
+  }
+  /**
+   * @description
    * delete all indices
    * @param {string} index
    * @return {Promise}
