@@ -6,15 +6,16 @@ module.exports = {
   beforeCreate(event) {
     const { data, where, select, populate } = event.params;
     if (!data.uid)
-      event.params.data.uid = [
-        (data.title ?? 'n').replace(/[\W_ ]+/g, '-'),
-        nanoid(5),
-      ].join('-');
+      data.uid = [(data.title ?? 'n').replace(/[\W_ ]+/g, '-'), nanoid(5)].join(
+        '-'
+      );
   },
   async afterCreate(event) {
     const { result } = event;
-    console.log('object created', event);
     if (!result.objectID) result.objectID = result.id;
+    result.compositeTags = result.tags.map((tag) =>
+      [tag.key, tag.label].join('||')
+    );
     await algolia.saveObject('posts', result);
   },
   beforeUpdate(event) {
@@ -27,6 +28,9 @@ module.exports = {
   },
   async afterUpdate(event) {
     const { result } = event;
+    result.compositeTags = result.tags.map((tag) =>
+      [tag.key, tag.label].join('||')
+    );
     if (!result.objectID) result.objectID = result.id;
     await algolia.updateObject('posts', result);
   },
