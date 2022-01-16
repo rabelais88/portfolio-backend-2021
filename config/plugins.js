@@ -24,4 +24,8 @@ module.exports = ({ env }) => ({
       },
     },
   },
+  'preview-button': {
+    enabled: true,
+    resolve: './src/plugins/preview-button',
+  },
 });

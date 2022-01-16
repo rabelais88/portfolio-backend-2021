@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db-strapi:
+    image: postgres:14.1
+    environment:
+      - POSTGRES_DB=sample-db
+      - POSTGRES_USER=sample-user
+      - POSTGRES_PASSWORD=sample-pass
+    volumes:
+      - ./.tmp/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # strapi_build:

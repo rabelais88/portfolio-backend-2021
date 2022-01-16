@@ -6,11 +6,21 @@ $ DATABASE_URL=test yarn strapi $STRAPI_ARGS
 ```
 - 어드민 첫 접속시 반드시 public role에 대한 접근 권한을 허용해 줄 것
 - 다시 indexing이 필요하지 않을 경우 `.env`에서 `INDEXING_ON_BOOT=true`를 삭제할 것
+- [strapi v4 플러그인 개발 관련 문서 1](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#creating-a-plugin)
+- [strapi v4 플러그인 개발 관련 문서 2](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html)
+- 플러그인 수정시 반드시 `yarn build` 해 줄 것
+- 빌드 폴더는 도커의 문제로 볼륨마운트에서 제거가 불가능함. 무조건 들어간다고 봐야함. 그래도 admin-ui 관련 플러그인을 제거하지 않는 이상 이슈 없음.
 
 # endpoints
 ```
 $HOST_URL:1337/admin
 $HOST_URL:1337/graphql
+```
+
+# local test
+```
+yarn build
+docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up
 ```
 
 # setting up & deploy

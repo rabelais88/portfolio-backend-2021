@@ -1,13 +1,5 @@
 version: '3.8'
 services:
-  db-strapi:
-    image: postgres:14.1
-    environment:
-      - POSTGRES_DB=sample-db
-      - POSTGRES_USER=sample-user
-      - POSTGRES_PASSWORD=sample-pass
-    volumes:
-     - ./.tmp/data:/var/lib/postgresql/data
   strapi:
     build:
       dockerfile: dockerfile
@@ -15,6 +7,8 @@ services:
     environment:
       - DATABASE_URL=postgres://sample-user:sample-pass@db-strapi:5432/sample-db
       - NODE_ENV=local
+      - PREVIEW_KEY=abcd1234
+      - PREVIEW_HOST_URL=http://localhost:3000
     volumes:
       - .:/home/node/app
       # - strapi_build:/home/node/app/build
@@ -22,8 +16,10 @@ services:
       - strapi_module:/home/node/app/node_modules
     ports:
       - '1337:1337'
+      - '8080:8080'
     depends_on:
       - db-strapi
+    command: "yarn strapi develop --watch-admin"
 
 volumes:
   strapi_module:

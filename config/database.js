@@ -3,26 +3,30 @@ const path = require('path');
 const { parse } = require('pg-connection-string');
 
 module.exports = ({ env }) => {
-  const { host, port, database, user, password } = parse(env('DATABASE_URL'));
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-  const isLocal = process.env.NODE_ENV === 'local';
-  const ssl = isLocal
-    ? false
-    : { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
-  return {
-    connection: {
-      client: 'postgres',
+  try {
+    const { host, port, database, user, password } = parse(env('DATABASE_URL'));
+    const isLocal = process.env.NODE_ENV === 'local';
+    const ssl = isLocal
+      ? false
+      : { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
+    return {
       connection: {
-        host,
-        port,
-        database,
-        user,
-        password,
-        ssl,
+        client: 'postgres',
+        connection: {
+          host,
+          port,
+          database,
+          user,
+          password,
+          ssl,
+        },
+        options: {
+          ssl: env('DATABASE_SSL', false),
+        },
       },
-      options: {
-        ssl: env('DATABASE_SSL', false),
-      },
-    },
-  };
+    };
+  } catch (err) {
+    console.log('missing database config. this is only allowed for build');
+    return {};
+  }
 };
