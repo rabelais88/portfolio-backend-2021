@@ -12,11 +12,14 @@ module.exports = {
   },
   async afterCreate(event) {
     const { result } = event;
-    if (!result.objectID) result.objectID = result.id;
-    result.compositeTags = result.tags.map((tag) =>
-      [tag.key, tag.label].join('||')
-    );
-    await algolia.saveObject('posts', result);
+    // indexing is prohibited for draft
+    if (result.publishedAt) {
+      if (!result.objectID) result.objectID = result.id;
+      result.compositeTags = result.tags.map((tag) =>
+        [tag.key, tag.label].join('||')
+      );
+      await algolia.saveObject('posts', result);
+    }
   },
   beforeUpdate(event) {
     const { data } = event.params;
@@ -28,11 +31,14 @@ module.exports = {
   },
   async afterUpdate(event) {
     const { result } = event;
-    result.compositeTags = result.tags.map((tag) =>
-      [tag.key, tag.label].join('||')
-    );
-    if (!result.objectID) result.objectID = result.id;
-    await algolia.updateObject('posts', result);
+    // indexing is prohibited for draft
+    if (result.publishedAt) {
+      result.compositeTags = result.tags.map((tag) =>
+        [tag.key, tag.label].join('||')
+      );
+      if (!result.objectID) result.objectID = result.id;
+      await algolia.updateObject('posts', result);
+    }
   },
   async beforeDelete(event) {
     await algolia.deleteObjectById('posts', event.params.where.id);
