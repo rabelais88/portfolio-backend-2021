@@ -7,8 +7,8 @@ services:
     environment:
       - DATABASE_URL=postgres://sample-user:sample-pass@db-strapi:5432/sample-db
       - NODE_ENV=local
-      - PREVIEW_KEY=abcd1234
-      - PREVIEW_HOST_URL=http://localhost:3000
+      - STRAPI_ADMIN_PREVIEW_KEY=abcd1234
+      - STRAPI_ADMIN_PREVIEW_HOST_URL=http://localhost:3000
     volumes:
       - .:/home/node/app
       # - strapi_build:/home/node/app/build
