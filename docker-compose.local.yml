@@ -16,10 +16,8 @@ services:
       - strapi_module:/home/node/app/node_modules
     ports:
       - '1337:1337'
-      - '8080:8080'
     depends_on:
       - db-strapi
-    command: "yarn strapi develop --watch-admin"
 
 volumes:
   strapi_module:

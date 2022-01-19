@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  strapi:
+    ports:
+      - '8080:8080'
+    command: "yarn strapi develop --watch-admin"
