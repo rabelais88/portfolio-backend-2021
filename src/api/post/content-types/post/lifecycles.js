@@ -43,7 +43,7 @@ module.exports = {
         [tag.key, tag.label].join('||')
       );
       result.objectID = result.id;
-      await algolia.updateObject('posts', result);
+      await algolia.saveObject('posts', result);
     }
   },
   async beforeDelete(event) {
