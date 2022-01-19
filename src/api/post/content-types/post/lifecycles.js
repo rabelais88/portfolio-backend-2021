@@ -15,7 +15,8 @@ module.exports = {
     console.log('afterCreate()', result);
     // indexing is prohibited for draft
     if (result.publishedAt) {
-      if (!result.objectID) result.objectID = result.id;
+      console.log('afterCreate indexing');
+      result.objectID = result.id;
       result.compositeTags = result.tags.map((tag) =>
         [tag.key, tag.label].join('||')
       );
@@ -23,22 +24,25 @@ module.exports = {
     }
   },
   beforeUpdate(event) {
-    const { data } = event.params;
-    if (!data.uid)
-      event.params.data.uid = [
-        (data.title ?? 'n').replace(/[\W_ ]+/g, '-'),
-        nanoid(5),
-      ].join('-');
+    console.log('beforeUpdate()', event);
+    // when publishing draft, uid becomes empty
+    // const { data } = event.params;
+    // if (!data.uid)
+    //   event.params.data.uid = [
+    //     (data.title ?? 'n').replace(/[\W_ ]+/g, '-'),
+    //     nanoid(5),
+    //   ].join('-');
   },
   async afterUpdate(event) {
     const { result } = event;
     console.log('afterUpdate()', result);
-    // indexing is prohibited for draft
+    // indexing is prohibited for draft`
     if (result.publishedAt) {
+      console.log('aftetrUpdate() indexing');
       result.compositeTags = result.tags.map((tag) =>
         [tag.key, tag.label].join('||')
       );
-      if (!result.objectID) result.objectID = result.id;
+      result.objectID = result.id;
       await algolia.updateObject('posts', result);
     }
   },
