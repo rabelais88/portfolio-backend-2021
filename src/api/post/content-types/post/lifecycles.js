@@ -12,6 +12,7 @@ module.exports = {
   },
   async afterCreate(event) {
     const { result } = event;
+    console.log('afterCreate()', result);
     // indexing is prohibited for draft
     if (result.publishedAt) {
       if (!result.objectID) result.objectID = result.id;
@@ -31,6 +32,7 @@ module.exports = {
   },
   async afterUpdate(event) {
     const { result } = event;
+    console.log('afterUpdate()', result);
     // indexing is prohibited for draft
     if (result.publishedAt) {
       result.compositeTags = result.tags.map((tag) =>
