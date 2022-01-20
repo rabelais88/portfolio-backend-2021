@@ -13,13 +13,15 @@ class Algolia {
    * @description
    * setting facets(filters)
    * @param {string} index
-   * @param {string[]} facets
+   * @param {string[]} facets - used for tag filtering
+   * @param {string[]} replicas - used for sorting
    * @return {Promise}
    */
-  settings(index, facets = []) {
+  settings(index, { facets = [], replicas = [] } = {}) {
     // https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#examples
     return this.client.initIndex(index).setSettings({
       attributesForFaceting: facets,
+      replicas,
     });
   }
   /**

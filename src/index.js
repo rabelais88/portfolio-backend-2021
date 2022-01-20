@@ -38,6 +38,9 @@ module.exports = {
     const mapIndex = (post) => ({
       ...post,
       compositeTags: post.tags.map((tag) => [tag.key, tag.label].join('||')),
+      updatedAtTimestamp: post.updatedAt
+        ? new Date(post.updatedAt).getTime()
+        : 0,
       objectID: post.id,
     });
 
@@ -65,7 +68,10 @@ module.exports = {
       console.log(`updating ${posts.length} post(s)...`);
       // the Promise is left unwaited intentionally
       await algolia.deleteObjects('posts');
-      await algolia.settings('posts', ['searchable(compositeTags)']);
+      await algolia.settings('posts', {
+        facets: ['searchable(compositeTags)'],
+        replicas: ['updatedAtTimestamp'],
+      });
       algolia.saveObjects('posts', posts);
     }
   },
