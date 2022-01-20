@@ -9,11 +9,8 @@ const postUpdated = async (event) => {
   // indexing is prohibited for draft
   if (result.publishedAt) {
     console.log('afterCreate indexing');
-    result.objectID = result.id;
-    result.compositeTags = result.tags.map((tag) =>
-      [tag.key, tag.label].join('||')
-    );
-    await algolia.saveObject('posts', result);
+    const postIndex = algolia.mapPostForIndex(result);
+    await algolia.saveObject('posts', postIndex);
   }
 };
 

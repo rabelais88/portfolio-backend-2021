@@ -18,32 +18,6 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
-    /**
-     * @typedef Post
-     * @type {{
-     *   id: string;
-     *   title: string;
-     *   content: string;
-     *   uid: string;
-     *   createdAt: string;
-     *   updatedAt: string;
-     *   publishedAt: string;
-     *   tags: [{ id: string; label: string; key: string;}]
-     * }}
-     */
-
-    /**
-     * @param {Post} post
-     */
-    const mapIndex = (post) => ({
-      ...post,
-      compositeTags: post.tags.map((tag) => [tag.key, tag.label].join('||')),
-      updatedAtTimestamp: post.updatedAt
-        ? new Date(post.updatedAt).getTime()
-        : 0,
-      objectID: post.id,
-    });
-
     try {
       algolia.init({
         appId: process.env.ALGOLIA_APP_ID,
@@ -64,7 +38,7 @@ module.exports = {
             tags: true,
           },
         })
-      ).map(mapIndex);
+      ).map(algolia.mapPostForIndex);
       console.log(`updating ${posts.length} post(s)...`);
       // the Promise is left unwaited intentionally
       await algolia.deleteObjects('posts');

@@ -91,6 +91,33 @@ class Algolia {
   deleteBy(index, query) {
     return this.client.initIndex(index).deleteBy(query);
   }
+  /**
+   * @typedef Post
+   * @type {{
+   *   id: string;
+   *   title: string;
+   *   content: string;
+   *   uid: string;
+   *   createdAt: string;
+   *   updatedAt: string;
+   *   publishedAt: string;
+   *   tags: [{ id: string; label: string; key: string;}]
+   * }}
+   */
+
+  /**
+   * @param {Post} post
+   */
+  mapPostForIndex(post) {
+    return {
+      ...post,
+      compositeTags: post.tags.map((tag) => [tag.key, tag.label].join('||')),
+      updatedAtTimestamp: post.updatedAt
+        ? new Date(post.updatedAt).getTime()
+        : 0,
+      objectID: post.id,
+    };
+  }
 }
 
 module.exports = new Algolia();
