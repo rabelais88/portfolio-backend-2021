@@ -2,6 +2,21 @@
 const { nanoid } = require('nanoid');
 const algolia = require('../../../../algolia');
 // const updateHook = require('../../../../updateHook');
+
+const postUpdated = async (event) => {
+  const { result } = event;
+  console.log('postUpdated() result', result);
+  // indexing is prohibited for draft
+  if (result.publishedAt) {
+    console.log('afterCreate indexing');
+    result.objectID = result.id;
+    result.compositeTags = result.tags.map((tag) =>
+      [tag.key, tag.label].join('||')
+    );
+    await algolia.saveObject('posts', result);
+  }
+};
+
 module.exports = {
   beforeCreate(event) {
     const { data, where, select, populate } = event.params;
@@ -11,40 +26,16 @@ module.exports = {
       );
   },
   async afterCreate(event) {
-    const { result } = event;
-    console.log('afterCreate()', result);
-    // indexing is prohibited for draft
-    if (result.publishedAt) {
-      console.log('afterCreate indexing');
-      result.objectID = result.id;
-      result.compositeTags = result.tags.map((tag) =>
-        [tag.key, tag.label].join('||')
-      );
-      await algolia.saveObject('posts', result);
-    }
+    console.log('afterCreate()---');
+    await postUpdated(event);
   },
   beforeUpdate(event) {
     console.log('beforeUpdate()', event);
-    // when publishing draft, uid becomes empty
-    // const { data } = event.params;
-    // if (!data.uid)
-    //   event.params.data.uid = [
-    //     (data.title ?? 'n').replace(/[\W_ ]+/g, '-'),
-    //     nanoid(5),
-    //   ].join('-');
+    // const {content = ''} = event?.params?.data;
   },
   async afterUpdate(event) {
-    const { result } = event;
-    console.log('afterUpdate()', result);
-    // indexing is prohibited for draft`
-    if (result.publishedAt) {
-      console.log('aftetrUpdate() indexing');
-      result.compositeTags = result.tags.map((tag) =>
-        [tag.key, tag.label].join('||')
-      );
-      result.objectID = result.id;
-      await algolia.saveObject('posts', result);
-    }
+    console.log('afterUpdate()---');
+    await postUpdated(event);
   },
   async beforeDelete(event) {
     await algolia.deleteObjectById('posts', event.params.where.id);
