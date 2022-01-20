@@ -44,8 +44,10 @@ module.exports = {
       await algolia.deleteObjects('posts');
       await algolia.settings('posts', {
         facets: ['searchable(compositeTags)'],
-        replicas: ['updatedAtTimestamp'],
       });
+      await algolia.makeSortedIndex('posts', 'post_updated_at', [
+        'desc(updatedAtTimestamp)',
+      ]);
       algolia.saveObjects('posts', posts);
     }
   },

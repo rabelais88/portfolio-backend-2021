@@ -15,14 +15,28 @@ class Algolia {
    * @param {string} index
    * @param {string[]} facets - used for tag filtering
    * @param {string[]} replicas - used for sorting
+   * @param {string[]} ranking - used for sorting
    * @return {Promise}
    */
-  settings(index, { facets = [], replicas = [] } = {}) {
+  settings(index, { facets = [], replicas = [], ranking = [] } = {}) {
+    const settings = {};
+    if (facets.length >= 1) settings.attributesForFaceting = facets;
+    if (replicas.length >= 1) settings.replicas = replicas;
+    if (ranking.length >= 1) settings.ranking = ranking;
     // https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#examples
-    return this.client.initIndex(index).setSettings({
-      attributesForFaceting: facets,
-      replicas,
-    });
+    return this.client.initIndex(index).setSettings(settings);
+  }
+  /**
+   * @param {string} index
+   * @param {string} newIndexName
+   * @param {string[]} indices
+   * @returns {Promise}
+   */
+  async makeSortedIndex(index, newIndexName, indices) {
+    // create replica
+    await this.settings(index, { replicas: [newIndexName] });
+    // set up property ranking for replica
+    await this.settings(newIndexName, { ranking: indices });
   }
   /**
    * @description
