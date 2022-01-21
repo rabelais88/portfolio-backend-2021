@@ -48,6 +48,9 @@ module.exports = {
       await algolia.makeSortedIndex('posts', 'post_updated_at', [
         'desc(updatedAtTimestamp)',
       ]);
+      await algolia.settings('post_updated_at', {
+        facets: ['searchable(compositeTags)'],
+      });
       algolia.saveObjects('posts', posts);
     }
   },
