@@ -132,10 +132,11 @@ class Algolia {
   /**
    * @param {Post} post
    */
-  mapPostForIndex(post) {
+  mapPostForIndex({ tags = [], ...post }) {
     return {
       ...post,
-      compositeTags: post.tags.map((tag) => [tag.key, tag.label].join('||')),
+      tags: tags.map((t) => ({ id: t.id, key: t.key, label: t.label })),
+      compositeTags: tags.map((tag) => [tag.key, tag.label].join('||')),
       updatedAtTimestamp: post.updatedAt
         ? new Date(post.updatedAt).getTime()
         : 0,
