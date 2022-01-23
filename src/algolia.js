@@ -1,5 +1,7 @@
 // https://www.algolia.com/doc/api-reference/api-methods/save-objects/
 const algoliasearch = require('algoliasearch');
+const { remark } = require('remark');
+const strip = require('strip-markdown');
 
 class Algolia {
   constructor() {
@@ -122,9 +124,11 @@ class Algolia {
   /**
    * @param {Post} post
    */
-  mapPostForIndex(post) {
+  async mapPostForIndex({ content, ...post }) {
+    const strippedContent = await remark.use(strip).process(content);
     return {
       ...post,
+      content: strippedContent,
       compositeTags: post.tags.map((tag) => [tag.key, tag.label].join('||')),
       updatedAtTimestamp: post.updatedAt
         ? new Date(post.updatedAt).getTime()

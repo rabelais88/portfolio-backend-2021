@@ -27,7 +27,7 @@ module.exports = {
       console.error(err);
     }
     if (process.env.INDEXING_ON_BOOT === 'true') {
-      const posts = Array.from(
+      const _posts = Array.from(
         await strapi.db.query('api::post.post').findMany({
           where: {
             publishedAt: {
@@ -38,7 +38,8 @@ module.exports = {
             tags: true,
           },
         })
-      ).map(algolia.mapPostForIndex);
+      );
+      const posts = await Promise.all(_posts.map(algolia.mapPostForIndex));
       console.log(`updating ${posts.length} post(s)...`);
       // the Promise is left unwaited intentionally
       await algolia.deleteObjects('posts');
