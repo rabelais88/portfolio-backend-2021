@@ -11,7 +11,7 @@ class Algolia {
   }
   /**
    * @description
-   * setting facets(filters)
+   * setting facets(filters) & replicas, ranking for sorting
    * @param {string} index
    * @param {string[]} facets - used for tag filtering
    * @param {string[]} replicas - used for sorting
@@ -24,6 +24,16 @@ class Algolia {
     if (replicas.length >= 1) settings.replicas = replicas;
     if (ranking.length >= 1) settings.ranking = ranking;
     // https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#examples
+    return this.client.initIndex(index).setSettings(settings);
+  }
+  /**
+   * @description
+   * exposes default .setSettings
+   * @param {string} index
+   * @param {*} settings
+   * @returns {Promise}
+   */
+  rawSettings(index, settings = {}) {
     return this.client.initIndex(index).setSettings(settings);
   }
   /**

@@ -51,6 +51,11 @@ module.exports = {
       await algolia.settings('post_updated_at', {
         facets: ['searchable(compositeTags)'],
       });
+      await algolia.rawSettings('post_updated_at', {
+        // https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/#nbwords
+        // 40 letters max
+        attributesToSnippet: ['content:40'],
+      });
       algolia.saveObjects('posts', posts);
     }
   },
