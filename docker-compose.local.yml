@@ -10,15 +10,12 @@ services:
       - STRAPI_ADMIN_PREVIEW_KEY=abcd1234
       - STRAPI_ADMIN_PREVIEW_HOST_URL=http://localhost:3000
     volumes:
-      - .:/home/node/app
-      # - strapi_build:/home/node/app/build
-      # CLEAR VOLUME IF A NEW PACKAGE GOT INSTALLED
-      - strapi_module:/home/node/app/node_modules
+      - ./src:/home/node/app/src
+      - ./config:/home/node/app/config
+      - ./public:/home/node/app/public
+      - ./.env:/home/node/app/.env
+      - ./favicon.ico:/home/node/app/favicon.ico
     ports:
       - '1337:1337'
     depends_on:
       - db-strapi
-
-volumes:
-  strapi_module:
-  # strapi_build:
