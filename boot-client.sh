@@ -1,0 +1,1 @@
+docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml -f docker-compose.local-admin.yml up
