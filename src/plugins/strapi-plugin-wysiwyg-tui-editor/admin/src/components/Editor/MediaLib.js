@@ -11,6 +11,7 @@ export default function MediaLib({ isOpen, onClose, editor }) {
       return;
     }
 
+    // content of files
     // [
     //   {
     //     id: 2,
@@ -55,10 +56,12 @@ export default function MediaLib({ isOpen, onClose, editor }) {
     //     updatedAt: '2022-01-27T14:34:50.657Z',
     //   },
     // ];
-    console.log('assetHandle, files', files);
+    
+    const re = new RegExp(process.env.STRAPI_ADMIN_AWS_S3, 'i') 
+    const s3ToCdn = (url ='') => url.replace(re, process.env.STRAPI_ADMIN_AWS_CDN);
     const formattedFiles = files.map((f) => ({
       alt: f.alternativeText || f.name,
-      url: prefixFileUrlWithBackendUrl(f.url),
+      url: s3ToCdn(prefixFileUrlWithBackendUrl(f.url)),
       mime: f.mime,
       width: f.width,
       height: f.height,
@@ -76,7 +79,7 @@ export default function MediaLib({ isOpen, onClose, editor }) {
       if (alt !== '') options.push(`alt="${alt}"`);
       const strOptions = options.join(' ');
       editor.insertText(
-        `<img src="${url}" width="${width}" height="${height}" ${strOptions}>`
+        `<img src="${url}" width="${width}" height="${height}" ${strOptions} />`
       );
       editor.insertText('\n');
     });
