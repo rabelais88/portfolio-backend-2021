@@ -15,12 +15,15 @@ module.exports = ({ env }) => [
             'strapi.io',
             `${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`,
             'sungryeol-portfolio.herokuapp.com',
+            `${env('AWS_CDN')}`
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
             `${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`,
+            'sungryeol-portfolio.herokuapp.com',
+            `${env('AWS_CDN')}`
           ],
           upgradeInsecureRequests: null,
         },

@@ -28,4 +28,8 @@ module.exports = ({ env }) => ({
     enabled: true,
     resolve: './src/plugins/preview-button',
   },
+  'wysiwyg-tui-editor': {
+    enabled: true,
+    resolve: './src/plugins/strapi-plugin-wysiwyg-tui-editor',
+  },
 });

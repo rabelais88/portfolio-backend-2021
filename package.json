@@ -20,12 +20,15 @@
     "@strapi/plugin-users-permissions": "4.0.5",
     "@strapi/provider-upload-aws-s3": "4.0.5",
     "@strapi/strapi": "4.0.5",
+    "@toast-ui/react-editor": "^2.5.4",
     "algoliasearch": "^4.11.0",
     "axios": "^0.24.0",
     "nanoid": "^3.1.30",
     "pg": "^8.7.1",
     "pg-connection-string": "^2.5.0",
-    "sqlite3": "5.0.2"
+    "react-use": "^17.3.2",
+    "sqlite3": "5.0.2",
+    "styled-components": "^5.3.3"
   },
   "author": {
     "name": "Sungryeol Park"
