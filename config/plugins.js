@@ -26,7 +26,22 @@ module.exports = ({ env }) => ({
   },
   'preview-button': {
     enabled: true,
-    resolve: './src/plugins/preview-button',
+    config: {
+      contentTypes: [
+        {
+          uid: 'api::post.post',
+          targetField: 'uid',
+          draft: {
+            query: {
+              slug: 'posts',
+            },
+          },
+          published: {
+            basePath: 'posts',
+          },
+        },
+      ],
+    },
   },
   'wysiwyg-tui-editor': {
     enabled: true,
