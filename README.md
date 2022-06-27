@@ -38,3 +38,5 @@ heroku git:remote -a sungryeol-portfolio
 # proceed next step after setting up heroku config vars
 git push heroku main
 ```
+
+2022.6.27 -[] check @/src/index.js for debugging default user info

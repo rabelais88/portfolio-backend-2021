@@ -18,6 +18,15 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
+    // role debugging
+    // https://github.com/strapi/strapi/blob/master/packages/plugins/users-permissions/server/services/role.js
+    /** @type {{ id: number; name: 'Public'; description: string; type: string; createdAt: string; updatedAt: string; }} */
+    const publicRole = await strapi
+      .query('plugin::users-permissions.role')
+      .findOne({ where: { type: 'public' }, populate: ['permissions'] });
+
+    console.log(publicRole);
+
     try {
       algolia.init({
         appId: process.env.ALGOLIA_APP_ID,
