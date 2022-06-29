@@ -29,3 +29,19 @@ services:
         value: https://sungryeol.com/api/preview
       - key: STRAPI_PREVIEW_PUBLISHED_URL
         value: https://sungryeol.com
+      - key: STRAPI_PREVIEW_SECRET
+        sync: false
+      - key: ALGOLIA_API_KEY
+        sync: false
+      - key: ALGOLIA_APP_ID
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: API_TOKEN_SALT
+        sync: false
+      - key: STRAPI_ADMIN_PREVIEW_KEY
+        sync: false
+      - key: VERCEL_CONTENT_CHANGE_HOOK_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
