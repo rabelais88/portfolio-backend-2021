@@ -75,6 +75,6 @@ processes = []
   port = 443
 
 # For insecure connections. 
-# [[services.ports]]
-#  handlers = []
-#  port = 10000
+[[services.ports]]
+ handlers = []
+ port = 10000
