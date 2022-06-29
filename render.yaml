@@ -3,10 +3,13 @@ services:
     name: portfolio-backend
     env: docker
     repo: https://github.com/rabelais88/portfolio-backend-2021 # optional
-    # region: oregon
-    # plan: standard
+    region: singapore
+    plan: free
     branch: main
     # numInstances: 1
+    # maxInstances: 3
+    dockerfilePath: ./dockerfile.prod
+    dockerContext: .
     healthCheckPath: /
     envVars:
       - key: AWS_BUCKET
