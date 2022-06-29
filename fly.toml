@@ -1,0 +1,12 @@
+[env]
+	AWS_BUCKET="sungryeol-portfolio-prod"
+	AWS_CDN="d3es8xowxikdnc.cloudfront.net"
+	AWS_REGION="ap-northeast-2"
+	HOST_URL="https://fly.io"
+	IMAGE_PREVIEW_HOST="fly.io"
+	INDEXING_ON_BOOT="false"
+	STRAPI_ADMIN_AWS_CDN="d3es8xowxikdnc.cloudfront.net"
+	STRAPI_ADMIN_AWS_S3="sungryeol-portfolio-prod.s3.ap-northeast-2.amazonaws.com"
+	STRAPI_PREVIEW_SECRET="L4x5m618hRjrUlzK5O5WVJtTs2Vi4Nwj"
+	STRAPI_PREVIEW_DRAFT_URL="https://sungryeol.com/api/preview"
+	STRAPI_PREVIEW_PUBLISHED_URL="https://sungryeol.com"
