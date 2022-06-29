@@ -7,8 +7,9 @@ module.exports = ({ env }) => {
     const { host, port, database, user, password } = parse(env('DATABASE_URL'));
     const isLocal = process.env.NODE_ENV === 'local';
     const ssl = env('DATABASE_SSL', false);
-    const sslParams = isLocal &&
-      ssl && { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
+    const sslParams = isLocal
+      ? false
+      : { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
     return {
       connection: {
         client: 'postgres',
@@ -21,7 +22,7 @@ module.exports = ({ env }) => {
           ssl: sslParams,
         },
         options: {
-          ssl: env('DATABASE_SSL', false),
+          ssl,
         },
       },
     };
