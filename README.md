@@ -37,17 +37,7 @@ docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up
 
 # setting up & deploy
 
-- PostgreSQL DB: fly.io
-
-install `flyctl` first
-
-```
-# check instance info
-$./db fly info
-# update settings
-$./db source deploy.sh
-```
-
+- PostgreSQL DB: supabase
 - App Host: render.com
 
 -
