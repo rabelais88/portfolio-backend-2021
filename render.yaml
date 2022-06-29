@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    repo: https://github.com/rabelais88/portfolio-backend-2021 # optional
+    region: singapore
+    plan: free
+    branch: main
+    # numInstances: 1
+    # maxInstances: 3
+    dockerfilePath: ./dockerfile.prod
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: AWS_BUCKET
+        value: sungryeol-portfolio-prod
+      - key: AWS_CDN
+        value: d3es8xowxikdnc.cloudfront.net
+      - key: AWS_REGION
+        value: ap-northeast-2
+      - key: HOST_URL
+        value: https://myapp.com
+      - key: IMAGE_PREVIEW_HOST
+        value: myapp.com
+      - key: INDEXING_ON_BOOT
+        value: 'true'
+      - key: STRAPI_ADMIN_AWS_CDN
+        value: d3es8xowxikdnc.cloudfront.net
+      - key: STRAPI_ADMIN_AWS_S3
+        value: sungryeol-portfolio-prod.s3.ap-northeast-2.amazonaws.com
+      - key: STRAPI_PREVIEW_DRAFT_URL
+        value: https://sungryeol.com/api/preview
+      - key: STRAPI_PREVIEW_PUBLISHED_URL
+        value: https://sungryeol.com
+      - key: STRAPI_PREVIEW_SECRET
+        sync: false
+      - key: ALGOLIA_API_KEY
+        sync: false
+      - key: ALGOLIA_APP_ID
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: API_TOKEN_SALT
+        sync: false
+      - key: STRAPI_ADMIN_PREVIEW_KEY
+        sync: false
+      - key: VERCEL_CONTENT_CHANGE_HOOK_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false

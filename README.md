@@ -30,11 +30,5 @@ docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up
 ```
 
 # setting up & deploy
-```
-# https://devcenter.heroku.com/articles/git
-cp .env.example .env
-vi .env
-heroku git:remote -a sungryeol-portfolio
-# proceed next step after setting up heroku config vars
-git push heroku main
-```
+- PostgreSQL DB: fly.io
+- App Host: render.com
