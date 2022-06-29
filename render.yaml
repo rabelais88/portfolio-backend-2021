@@ -44,8 +44,6 @@ services:
         sync: false
       - key: API_TOKEN_SALT
         sync: false
-      - key: STRAPI_ADMIN_PREVIEW_KEY
-        sync: false
       - key: VERCEL_CONTENT_CHANGE_HOOK_URL
         sync: false
       - key: DATABASE_URL
