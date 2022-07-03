@@ -9,6 +9,7 @@ services:
       - NODE_ENV=local
       - STRAPI_ADMIN_PREVIEW_KEY=abcd1234
       - STRAPI_ADMIN_PREVIEW_HOST_URL=http://localhost:3000
+      - WAIT_HOSTS=db-strapi:5432
     volumes:
       - ./src:/home/node/app/src
       - ./config:/home/node/app/config
