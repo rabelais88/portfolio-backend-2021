@@ -38,3 +38,8 @@ docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up
 - PostgreSQL DB: supabase
 - App Host: render.com
 
+# updating algolia index manually
+
+```
+GET /algolia-index
+```

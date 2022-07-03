@@ -6,7 +6,6 @@ class Algolia {
     this.client = null;
   }
   init({ appId = '', apiKey = '' }) {
-    console.log('initiating algolia...', appId);
     this.client = algoliasearch(appId, apiKey);
   }
   /**
