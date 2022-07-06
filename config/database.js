@@ -6,7 +6,7 @@ module.exports = ({ env }) => {
   try {
     const { host, port, database, user, password } = parse(env('DATABASE_URL'));
     const isLocal = process.env.NODE_ENV === 'local';
-    const ssl = env('DATABASE_SSL', false) === 'true';
+    const ssl = env('DATABASE_SSL', false);
     const sslParams = isLocal
       ? false
       : { rejectUnauthorized: env('DATABASE_REJECT_UNAUTHORIZED', false) };
