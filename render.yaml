@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-backend
+    name: sungryeol-portfolio-backend
     env: docker
     repo: https://github.com/rabelais88/portfolio-backend-2021 # optional
     region: singapore
