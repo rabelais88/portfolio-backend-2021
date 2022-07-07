@@ -23,7 +23,6 @@ services:
       - key: IMAGE_PREVIEW_HOST
         value: portfolio-backend-d9bi.onrender.com
       - key: INDEXING_ON_BOOT
-        value: 'false'
         sync: false
       - key: STRAPI_ADMIN_AWS_CDN
         value: d3es8xowxikdnc.cloudfront.net
