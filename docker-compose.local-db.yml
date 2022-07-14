@@ -2,13 +2,19 @@ version: '3.8'
 services:
   db-strapi:
     image: postgres:14.1
+    user: 999:999
     environment:
       - POSTGRES_DB=sample-db
       - POSTGRES_USER=sample-user
       - POSTGRES_PASSWORD=sample-pass
+      - PGDATA=/var/lib/postgresql/data
     volumes:
       - ./.tmp/data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-
-  # strapi_build:
+      - '5432:5432'
+    # https://forums.docker.com/t/data-directory-var-lib-postgresql-data-pgdata-has-wrong-ownership/17963/40
+    # this solves ownership issues
+    # Permissions bug on macos: the volume is mounted as root the first instant, then it's mapped to 999. If we
+    # start with postgres directly it complains, if we start it after bash it's fine. It needs to wait at least 2
+    # seconds for some f* reason
+    entrypoint: bash -lc "sleep 2; /usr/lib/postgresql/14/bin/postgres"
