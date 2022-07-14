@@ -35,6 +35,12 @@ docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up
 
 # setting up & deploy
 
+- set yarn version to appropriate version: read `package.json` setting
+
+```
+yarn set version 1.22.15
+```
+
 - PostgreSQL DB: supabase
 - App Host: render.com
 
