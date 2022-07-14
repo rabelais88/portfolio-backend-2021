@@ -49,3 +49,11 @@ yarn set version 1.22.15
 ```
 GET /algolia-index
 ```
+
+# troubleshooting
+
+- trouble installing to m1 pro CPU: [related github issue](https://github.com/strapi/strapi/issues/12057)
+
+```
+arch -x86_64 yarn add sqlite3
+```
