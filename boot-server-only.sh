@@ -1,4 +1,7 @@
-# source boot-server-only.sh
-# source boot-server-only.sh down
-# source boot-server-only.sh up build
-docker-compose -f docker-compose.local-db.yml -f docker-compose.local.yml ${1:-up} $2
+#!/bin/bash
+
+case ${1:-up} in
+    "up") mutagen-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up;;
+    "down") mutagen-compose -f docker-compose.local-db.yml -f docker-compose.local.yml down;;
+    "build") mutagen-compose -f docker-compose.local-db.yml -f docker-compose.local.yml up --build;;
+esac

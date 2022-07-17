@@ -10,10 +10,16 @@ services:
       - STRAPI_ADMIN_PREVIEW_KEY=abcd1234
       - STRAPI_ADMIN_PREVIEW_HOST_URL=http://localhost:3000
       - WAIT_HOSTS=db-strapi:5432
+    # volumes:
+    #   - ./src:/home/node/app/src
+    #   - ./config:/home/node/app/config
+    #   - ./public:/home/node/app/public
+    #   - ./.env:/home/node/app/.env
+    #   - ./favicon.ico:/home/node/app/favicon.ico
     volumes:
-      - ./src:/home/node/app/src
-      - ./config:/home/node/app/config
-      - ./public:/home/node/app/public
+      - portfolio-backend-src:/home/node/app/src
+      - portfolio-backend-config:/home/node/app/config
+      - portfolio-backend-public:/home/node/app/public
       - ./.env:/home/node/app/.env
       - ./favicon.ico:/home/node/app/favicon.ico
     ports:
@@ -21,3 +27,33 @@ services:
     depends_on:
       - db-strapi
     restart: always
+
+volumes:
+  portfolio-backend-src:
+  portfolio-backend-config:
+  portfolio-backend-public:
+
+# https://mutagen.io/documentation/orchestration/compose
+x-mutagen:
+  sync:
+    defaults:
+      ignore:
+        vcs: true
+        paths:
+          # ignore all temporary files
+          # because this docker setting is not for production.
+          - 'node_modules'
+          - '.tmp'
+          - 'dist'
+    portfolio-backend-src:
+      alpha: './src' # mutagen does not know vscode workspace
+      beta: 'volume://portfolio-backend-src' # volume name
+      mode: 'two-way-resolved'
+    portfolio-backend-config:
+      alpha: './config'
+      beta: 'volume://portfolio-backend-config'
+      mode: 'two-way-resolved'
+    portfolio-backend-public:
+      alpha: './public'
+      beta: 'volume://portfolio-backend-public'
+      mode: 'two-way-resolved'
