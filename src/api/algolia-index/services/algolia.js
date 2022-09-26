@@ -123,6 +123,7 @@ class Algolia {
    *   uid: string;
    *   createdAt: string;
    *   updatedAt: string;
+   *   dateOverride: string;
    *   publishedAt: string;
    *   tags: [{ id: string; label: string; key: string;}]
    * }}
@@ -132,13 +133,17 @@ class Algolia {
    * @param {Post} post
    */
   mapPostForIndex({ tags = [], ...post }) {
+    const dateOverride = post.dateOverride
+      ? new Date(post.dateOverride).getTime()
+      : 0;
+    const updatedAt = post.updatedAt ? new Date(post.updatedAt).getTime() : 0;
+    let updatedAtTimestamp = updatedAt;
+    if (dateOverride > 0) updatedAtTimestamp = dateOverride;
     return {
       ...post,
       tags: tags.map((t) => ({ id: t.id, key: t.key, label: t.label })),
       compositeTags: tags.map((tag) => [tag.key, tag.label].join('||')),
-      updatedAtTimestamp: post.updatedAt
-        ? new Date(post.updatedAt).getTime()
-        : 0,
+      updatedAtTimestamp,
       objectID: post.id,
     };
   }

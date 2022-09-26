@@ -26,6 +26,9 @@
     },
     "uid": {
       "type": "uid"
+    },
+    "dateOverride": {
+      "type": "date"
     }
   }
 }
