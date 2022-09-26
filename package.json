@@ -29,7 +29,7 @@
     "react-use": "^17.3.2",
     "slugify": "^1.6.5",
     "sqlite3": "^5.0.8",
-    "strapi-plugin-preview-button": "^0.3.4",
+    "strapi-plugin-preview-button": "^0.3.6",
     "styled-components": "^5.3.3"
   },
   "author": {
