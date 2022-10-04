@@ -24,6 +24,12 @@ module.exports = ({ env }) => {
         options: {
           ssl,
         },
+        // https://github.com/strapi/strapi/issues/11860
+        acquireConnectionTimeout: 600000,
+        pool: {
+          min: 0, // default 2
+          max: 6, // default 10
+        },
       },
     };
   } catch (err) {
